@@ -46,4 +46,10 @@ public final class Constants {
     public static final double ramseteZeta = 0.7;
   }
 
+  public static class Vision {
+    public static final double goalHeightInches = 30;
+    public static final double cameraHeightInches = 26.5;
+    public static final double cameraAngleDegrees = 0;
+  }
+
 }
