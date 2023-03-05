@@ -20,6 +20,11 @@ public class ArmSubsystem extends SubsystemBase {
         armEncoder = armMotor.getEncoder();
     }
 
+    public void setArmSpeed(double speed) {
+        double armSpeed = speed / 4;
+        armMotor.set(armSpeed);
+    }
+
     public void debug() {
         SmartDashboard.putNumber("Arm Encoder", armEncoder.getPosition());
     }

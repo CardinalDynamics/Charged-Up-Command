@@ -49,6 +49,14 @@ public class PneumaticsSubsystem extends SubsystemBase {
         }
     }
 
+    public void setArm(Value value) {
+        arm1.set(value);
+    }
+
+    public void setManipulator(Value value) {
+        manipulator.set(value);
+    }
+
     private boolean toBoolean(Value value) {
         return value == Value.kForward;
     }

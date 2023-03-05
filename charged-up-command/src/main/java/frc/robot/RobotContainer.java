@@ -7,7 +7,9 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.drive.DriveCommand;
+import frc.robot.commands.drive.*;
+import frc.robot.commands.arm.*;
+import frc.robot.commands.auto.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -18,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -31,16 +35,16 @@ public class RobotContainer {
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
 
+  SendableChooser<Command> autoChooser;
+
   // The robot's subsystems and commands are defined here...
   
   // Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveSubsystem drive = new DriveSubsystem();
-  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
-  private final PneumaticsSubsystem m_pneumaticsSubsystem = new PneumaticsSubsystem();
+  private final ArmSubsystem arm = new ArmSubsystem();
+  private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
 
-  private double xSpeed;
-  private double zRotation;
 
 
   // Commands
@@ -59,6 +63,13 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
+    autoChooser = new SendableChooser<>();
+
+    autoChooser.setDefaultOption("Clack Auto", new ClackAuto(drive));
+    autoChooser.addOption("Hybrid Cube", new HybridCube(drive, arm, pneumatics));
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
     // Button armOutButton = new Button(m_operatorController.get);
     JoystickButton armOutButton = new JoystickButton(m_operatorController, Button.kRightBumper.value);
     JoystickButton armInButton = new JoystickButton(m_operatorController, Button.kLeftBumper.value);
@@ -66,7 +77,7 @@ public class RobotContainer {
     Trigger grabberButton = new Trigger(() -> m_operatorController.getRightTriggerAxis() > 0.5);
     
 
-    drive.setDefaultCommand(new DriveCommand(drive, driverController::getLeftY, driverController::getRightX, xSpeed));
+    drive.setDefaultCommand(new DriveCommand(drive, driverController::getLeftY, driverController::getRightX));
     // Configure the trigger bindings
     configureBindings();
   }
