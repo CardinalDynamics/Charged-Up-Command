@@ -4,9 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.Constants.*;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.arm.*;
 import frc.robot.commands.auto.*;
@@ -14,11 +12,9 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+// import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,7 +36,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   
   // Subsystems
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveSubsystem drive = new DriveSubsystem();
   private final ArmSubsystem arm = new ArmSubsystem();
   private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
@@ -54,11 +49,8 @@ public class RobotContainer {
   private final CommandXboxController driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-  // private final CommandXboxController m_operatorController =
-  //     new CommandXboxController(OperatorConstants.kOperatorControllerPort);
-
-  private final XboxController m_operatorController =
-      new XboxController(OperatorConstants.kOperatorControllerPort);
+  private final CommandXboxController m_operatorController =
+      new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -70,14 +62,8 @@ public class RobotContainer {
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
-    // Button armOutButton = new Button(m_operatorController.get);
-    JoystickButton armOutButton = new JoystickButton(m_operatorController, Button.kRightBumper.value);
-    JoystickButton armInButton = new JoystickButton(m_operatorController, Button.kLeftBumper.value);
-    Trigger armUpButton = new Trigger(() -> m_operatorController.getLeftTriggerAxis() > 0.5);
-    Trigger grabberButton = new Trigger(() -> m_operatorController.getRightTriggerAxis() > 0.5);
-    
-
     drive.setDefaultCommand(new DriveCommand(drive, driverController::getLeftY, driverController::getRightX));
+    arm.setDefaultCommand(new ArmLift(arm, m_operatorController::getRightTriggerAxis, () -> false));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -92,13 +78,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    m_operatorController.a().onTrue(new ArmExtend(pneumatics, () -> true));
+    m_operatorController.x().onTrue(new Manipulator(pneumatics, () -> true));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
@@ -108,6 +90,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return autoChooser.getSelected();
   }
 }
