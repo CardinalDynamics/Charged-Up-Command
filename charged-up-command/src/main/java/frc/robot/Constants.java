@@ -28,6 +28,8 @@ public final class Constants {
     public static final int kRightMotor2Port = 4;
 
     public static final double gyroOffset = 0;
+
+    public static final double trackWidth = 0.61;
   }
 
   public static class MotionConstants {
