@@ -7,9 +7,16 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.drive.DriveCommand;
+import frc.robot.subsystems.*;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -19,15 +26,47 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  public static final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  NetworkTableEntry tx = table.getEntry("tx");
+  NetworkTableEntry ty = table.getEntry("ty");
+  NetworkTableEntry ta = table.getEntry("ta");
+
   // The robot's subsystems and commands are defined here...
+  
+  // Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DriveSubsystem drive = new DriveSubsystem();
+  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  private final PneumaticsSubsystem m_pneumaticsSubsystem = new PneumaticsSubsystem();
+
+  private double xSpeed;
+  private double zRotation;
+
+
+  // Commands
+  
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
+  private final CommandXboxController driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+
+  // private final CommandXboxController m_operatorController =
+  //     new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+
+  private final XboxController m_operatorController =
+      new XboxController(OperatorConstants.kOperatorControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    // Button armOutButton = new Button(m_operatorController.get);
+    JoystickButton armOutButton = new JoystickButton(m_operatorController, Button.kRightBumper.value);
+    JoystickButton armInButton = new JoystickButton(m_operatorController, Button.kLeftBumper.value);
+    Trigger armUpButton = new Trigger(() -> m_operatorController.getLeftTriggerAxis() > 0.5);
+    Trigger grabberButton = new Trigger(() -> m_operatorController.getRightTriggerAxis() > 0.5);
+    
+
+    drive.setDefaultCommand(new DriveCommand(drive, driverController::getLeftY, driverController::getRightX, xSpeed));
     // Configure the trigger bindings
     configureBindings();
   }
