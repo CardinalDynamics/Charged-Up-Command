@@ -17,7 +17,8 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
 
-    public static final double kJoystickDeadband = 0.1;
+    public static final double yDeadband = 0.1;
+    public static final double xDeadband = 0.1;
   }
 
   public static class DriveConstants {
@@ -28,4 +29,14 @@ public final class Constants {
 
     public static final double gyroOffset = 0;
   }
+
+  public static class MotionConstants {
+    public static final double maxVelocity = 4;
+    public static final double maxAcceleration = 3.0;
+
+    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+    public static final double ramseteB = 2;
+    public static final double ramseteZeta = 0.7;
+  }
+
 }
