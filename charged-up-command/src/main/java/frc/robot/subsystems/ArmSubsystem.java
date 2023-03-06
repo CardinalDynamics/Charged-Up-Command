@@ -25,13 +25,13 @@ public class ArmSubsystem extends SubsystemBase {
         armMotor.setIdleMode(IdleMode.kBrake);
         armMotor.setSmartCurrentLimit(80);
         armMotor.setInverted(true);
-        motionController = new ProfiledPIDController(0, 0, 0, new TrapezoidProfile.Constraints(2.5, 3));
-        armFeedforward = new ArmFeedforward(0, 0, 0, 0);
+        motionController = new ProfiledPIDController(4, 0, 0, new TrapezoidProfile.Constraints(2.5, 3));
+        armFeedforward = new ArmFeedforward(0, 2.5, 0.97, 0.20);
         
         armEncoder = armMotor.getEncoder();
         armEncoder.setPositionConversionFactor(50);
         armEncoder.setVelocityConversionFactor(50 / 60);
-        armEncoder.setPosition(0);
+        armEncoder.setPosition(70);
 
         setpoint = 90;
     }
@@ -59,7 +59,7 @@ public class ArmSubsystem extends SubsystemBase {
         input = motionController.calculate(armEncoder.getPosition(), setpoint);
         
         double betterFeedforward = armFeedforward.calculate(motionController.getSetpoint().position, motionController.getSetpoint().velocity);
-        setVoltage((MathUtil.clamp(input + betterFeedforward, -12, 12)) / 8);
+        setVoltage((MathUtil.clamp(input + betterFeedforward, -12, 12)) / 4);
 
         debug();
     }

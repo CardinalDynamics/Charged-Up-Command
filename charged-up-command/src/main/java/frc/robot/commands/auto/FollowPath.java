@@ -23,6 +23,7 @@ public class FollowPath extends CommandBase {
         Trajectory trajectory;
         try {
             trajectory = PathPlanner.loadPath(path, Constants.MotionConstants.maxVelocity, Constants.MotionConstants.maxAcceleration, reversed);
+            DriverStation.reportError("Trajectory loaded", false);
         } catch (TrajectoryParameterizer.TrajectoryGenerationException exception) {
             trajectory = new Trajectory();
             DriverStation.reportError("Failed to load trajectory", false);

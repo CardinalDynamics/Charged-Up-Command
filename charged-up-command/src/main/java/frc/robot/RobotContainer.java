@@ -37,7 +37,7 @@ public class RobotContainer {
   
   // Subsystems
   private final DriveSubsystem drive = new DriveSubsystem();
-  private final ArmSubsystem arm = new ArmSubsystem();
+  // private final ArmSubsystem arm = new ArmSubsystem();
   private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
   
 
@@ -56,14 +56,15 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    autoChooser = new SendableChooser<>();
+    autoChooser = new SendableChooser<Command>();
 
     autoChooser.setDefaultOption("Clack Auto", new ClackAuto(drive));
-    autoChooser.addOption("Hybrid Cube", new HybridCube(drive, arm, pneumatics));
+    // autoChooser.addOption("Hybrid Cube", new HybridCube(drive, arm, pneumatics));
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     drive.setDefaultCommand(new DriveCommand(drive, driverController::getLeftY, driverController::getRightX));
+    // arm.setDefaultCommand(new ArmLift(arm, m_operatorController::getRightTriggerAxis, () -> false));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -81,9 +82,9 @@ public class RobotContainer {
     m_operatorController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
     m_operatorController.x().whileTrue(pneumatics.runOnce(pneumatics::toggleManipulator));
 
-    m_operatorController.pov(180).onTrue(new SetArm(arm, 0));
-    m_operatorController.pov(90).onTrue(new SetArm(arm, 45));
-    m_operatorController.pov(0).onTrue(new SetArm(arm, 90));
+    // m_operatorController.pov(-1).whileTrue(new SetArm(arm, 70));
+    // m_operatorController.pov(90).onTrue(new SetArm(arm, 175));
+    // m_operatorController.pov(0).onTrue(new SetArm(arm, 359));
 
   }
 

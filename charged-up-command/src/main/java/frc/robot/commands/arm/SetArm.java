@@ -25,6 +25,11 @@ public class SetArm extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public void end(boolean inturrupted) {
+
     }
 }
