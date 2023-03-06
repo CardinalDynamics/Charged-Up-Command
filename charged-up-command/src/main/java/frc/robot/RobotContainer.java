@@ -64,7 +64,6 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     drive.setDefaultCommand(new DriveCommand(drive, driverController::getLeftY, driverController::getRightX));
-    arm.setDefaultCommand(new ArmLift(arm, m_operatorController::getRightTriggerAxis, () -> false));
     // Configure the trigger bindings
     configureBindings();
   }
@@ -81,6 +80,10 @@ public class RobotContainer {
   private void configureBindings() {
     m_operatorController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
     m_operatorController.x().whileTrue(pneumatics.runOnce(pneumatics::toggleManipulator));
+
+    m_operatorController.pov(180).onTrue(new SetArm(arm, 0));
+    m_operatorController.pov(90).onTrue(new SetArm(arm, 45));
+    m_operatorController.pov(0).onTrue(new SetArm(arm, 90));
 
   }
 
