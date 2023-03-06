@@ -39,6 +39,7 @@ public class RobotContainer {
   private final DriveSubsystem drive = new DriveSubsystem();
   private final ArmSubsystem arm = new ArmSubsystem();
   private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
+  
 
 
 
@@ -78,8 +79,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_operatorController.a().onTrue(new ArmExtend(pneumatics, () -> true));
-    m_operatorController.x().onTrue(new Manipulator(pneumatics, () -> true));
+    m_operatorController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
+    m_operatorController.x().whileTrue(pneumatics.runOnce(pneumatics::toggleManipulator));
 
   }
 
