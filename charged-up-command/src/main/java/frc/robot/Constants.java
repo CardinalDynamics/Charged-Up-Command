@@ -36,7 +36,7 @@ public final class Constants {
     public static final double ksVolts = 0.11233;
     public static final double kvVoltSecondsPerMeter = 1.3694;
     public static final double kaVoltSecondsSquaredPerMeter = 0.16351;
-    public static final double kPDriveVel = 0.65605;
+    public static final double kPDriveVel = 0; // 0.65605
 
     public static final double maxVelocity = 4;
     public static final double maxAcceleration = 3.0;
