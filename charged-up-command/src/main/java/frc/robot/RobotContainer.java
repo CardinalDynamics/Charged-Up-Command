@@ -56,7 +56,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    autoChooser = new SendableChooser<Command>();
+    autoChooser = new SendableChooser<>();
 
     autoChooser.setDefaultOption("Clack Auto", new ClackAuto(drive));
     // autoChooser.addOption("Hybrid Cube", new HybridCube(drive, arm, pneumatics));
@@ -95,6 +95,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return autoChooser.getSelected();
+    return new TestAuto(drive);
   }
 }

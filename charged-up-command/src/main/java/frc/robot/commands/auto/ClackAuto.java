@@ -8,7 +8,7 @@ public class ClackAuto extends SequentialCommandGroup {
     public ClackAuto(DriveSubsystem drive) {
         addCommands(
             new SetOdometry(drive, "Clack Auto"),
-            new FollowPath(drive, "Clack Auto", false)
+            new FollowPath(drive, "Clack Auto", false).getRamseteCommand()
         );
     }
     

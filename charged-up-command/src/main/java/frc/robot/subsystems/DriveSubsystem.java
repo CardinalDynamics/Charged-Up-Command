@@ -48,7 +48,7 @@ public class DriveSubsystem extends SubsystemBase {
         leftBack.follow(leftFront);
         rightBack.follow(rightFront);
 
-        rightFront.setInverted(false);
+        leftFront.setInverted(true);
 
         drive = new DifferentialDrive(leftFront, rightFront);
         kinematics = new DifferentialDriveKinematics(Constants.DriveConstants.trackWidth);
