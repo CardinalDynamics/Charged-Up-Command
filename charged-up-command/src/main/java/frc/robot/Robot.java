@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
     m_robotContainer.limelightMode();
+    m_robotContainer.debug();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

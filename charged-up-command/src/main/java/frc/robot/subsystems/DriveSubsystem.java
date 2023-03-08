@@ -20,11 +20,13 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 public class DriveSubsystem extends SubsystemBase {
 
     private final CANSparkMax leftFront, leftBack, rightFront, rightBack;
     private final RelativeEncoder leftEncoder, rightEncoder;
+    private final MotorControllerGroup left, right;
 
     private final DifferentialDrive drive;
 
@@ -45,12 +47,12 @@ public class DriveSubsystem extends SubsystemBase {
         rightFront = new CANSparkMax(Constants.DriveConstants.kRightMotor1Port, MotorType.kBrushless);
         rightBack = new CANSparkMax(Constants.DriveConstants.kRightMotor2Port, MotorType.kBrushless);
 
-        leftBack.follow(leftFront);
-        rightBack.follow(rightFront);
+        left = new MotorControllerGroup(leftFront, leftBack);
+        right = new MotorControllerGroup(rightFront, rightBack);
 
-        leftFront.setInverted(false);
+        right.setInverted(true);
 
-        drive = new DifferentialDrive(leftFront, rightFront);
+        drive = new DifferentialDrive(left, right);
         kinematics = new DifferentialDriveKinematics(Constants.DriveConstants.trackWidth);
 
         leftFront.setIdleMode(IdleMode.kBrake);
@@ -172,6 +174,7 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Odometry Y", getRobotPos().getY());
         SmartDashboard.putNumber("Right Velocity", rightEncoder.getVelocity());
         SmartDashboard.putNumber("Left Velocity", leftEncoder.getVelocity());
+        SmartDashboard.putData(drive);
     }
 
     public void stop() {

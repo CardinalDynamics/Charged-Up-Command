@@ -119,4 +119,12 @@ public class RobotContainer {
       vision.setModeVision();
     }
   }
+
+  public void debug() {
+    SmartDashboard.putData(drive);
+    // SmartDashboard.putData(arm);
+    SmartDashboard.putData(pneumatics);
+    SmartDashboard.putData(vision);
+    SmartDashboard.putData(intake);
+  }
 }
