@@ -32,6 +32,7 @@ public class RobotContainer {
   NetworkTableEntry ta = table.getEntry("ta");
 
   SendableChooser<Command> autoChooser;
+  SendableChooser<Boolean> limelightMode;
 
   // The robot's subsystems and commands are defined here...
   
@@ -39,6 +40,7 @@ public class RobotContainer {
   private final DriveSubsystem drive = new DriveSubsystem();
   // private final ArmSubsystem arm = new ArmSubsystem();
   private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
+  private final VisionSubsystem vision = new VisionSubsystem();
   
 
 
@@ -56,12 +58,18 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    autoChooser = new SendableChooser<>();
+    autoChooser = new SendableChooser<Command>();
+    limelightMode = new SendableChooser<Boolean>();
 
     autoChooser.setDefaultOption("Clack Auto", new ClackAuto(drive));
     // autoChooser.addOption("Hybrid Cube", new HybridCube(drive, arm, pneumatics));
+    autoChooser.addOption("Test Auto", new TestAuto(drive));
+
+    limelightMode.setDefaultOption("Drive", true);
+    limelightMode.addOption("Vision", false);
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putData("Limelight Mode", limelightMode);
 
     drive.setDefaultCommand(new DriveCommand(drive, driverController::getLeftY, driverController::getRightX));
     // arm.setDefaultCommand(new ArmLift(arm, m_operatorController::getRightTriggerAxis, () -> false));
@@ -95,6 +103,14 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new TestAuto(drive);
+    return autoChooser.getSelected();
+  }
+
+  public void limelightMode() {
+    if (limelightMode.getSelected()) {
+      vision.setModeDriver();
+    } else {
+      vision.setModeVision();
+    }
   }
 }

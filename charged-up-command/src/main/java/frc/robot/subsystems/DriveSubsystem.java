@@ -48,15 +48,15 @@ public class DriveSubsystem extends SubsystemBase {
         leftBack.follow(leftFront);
         rightBack.follow(rightFront);
 
-        leftFront.setInverted(true);
+        leftFront.setInverted(false);
 
         drive = new DifferentialDrive(leftFront, rightFront);
         kinematics = new DifferentialDriveKinematics(Constants.DriveConstants.trackWidth);
 
-        leftFront.setIdleMode(IdleMode.kCoast);
-        leftBack.setIdleMode(IdleMode.kCoast);
-        rightFront.setIdleMode(IdleMode.kCoast);
-        rightBack.setIdleMode(IdleMode.kCoast);
+        leftFront.setIdleMode(IdleMode.kBrake);
+        leftBack.setIdleMode(IdleMode.kBrake);
+        rightFront.setIdleMode(IdleMode.kBrake);
+        rightBack.setIdleMode(IdleMode.kBrake);
 
         leftFront.setSmartCurrentLimit(80);
         leftBack.setSmartCurrentLimit(80);
@@ -71,6 +71,8 @@ public class DriveSubsystem extends SubsystemBase {
 
         resetEncoders();
         odometry = new DifferentialDriveOdometry(getCurrentAngle(), getLeftEncoderPosition(), getRightEncoderPosition());
+
+        setEncoderRatio();
     }
 
     public Pose2d getRobotPos() {
@@ -104,6 +106,14 @@ public class DriveSubsystem extends SubsystemBase {
 
     public DifferentialDriveKinematics getKinematics() {
         return kinematics;
+    }
+
+    public void setEncoderRatio() {
+        leftEncoder.setPositionConversionFactor(Constants.DriveConstants.gearRatio * Constants.DriveConstants.wheelRatio);
+        rightEncoder.setPositionConversionFactor(Constants.DriveConstants.gearRatio * Constants.DriveConstants.wheelRatio);
+
+        leftEncoder.setVelocityConversionFactor((Constants.DriveConstants.gearRatio * Constants.DriveConstants.wheelRatio) / 60);
+        rightEncoder.setVelocityConversionFactor((Constants.DriveConstants.gearRatio * Constants.DriveConstants.wheelRatio) / 60);
     }
 
     public void arcadeDrive(double speed, double rotation) {

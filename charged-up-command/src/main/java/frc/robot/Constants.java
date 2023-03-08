@@ -30,6 +30,9 @@ public final class Constants {
     public static final double gyroOffset = 0;
 
     public static final double trackWidth = 0.61;
+
+    public static final double gearRatio = 1 / 10.71;
+    public static final double wheelRatio = 0.478779;
   }
 
   public static class MotionConstants {
@@ -38,8 +41,8 @@ public final class Constants {
     public static final double kaVoltSecondsSquaredPerMeter = 0.16351;
     public static final double kPDriveVel = 0; // 0.65605
 
-    public static final double maxVelocity = 4;
-    public static final double maxAcceleration = 3.0;
+    public static final double maxVelocity = 1.0;
+    public static final double maxAcceleration = 0.5;
 
     // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
     public static final double ramseteB = 2;
