@@ -1,21 +1,15 @@
 package frc.robot.commands.auto;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.*;
-import frc.robot.commands.arm.*;
 
 public class HybridCube extends SequentialCommandGroup {
 
-    public HybridCube(DriveSubsystem drive, ArmSubsystem arm, PneumaticsSubsystem pneumatics) {
+    public HybridCube(DriveSubsystem drive, PneumaticsSubsystem pneumatics, Intake intake) {
         addCommands(
-            new SetOdometry(drive, "Hybrid Cube"),
-            new FollowPath(drive, "Hybrid Cube", false),
-            new ArmLift(arm, () -> 0.5, () -> false),
-            new ArmExtend(pneumatics, () -> true),
-            new Manipulator(pneumatics, () -> true),
-            new ArmLift(arm, () -> -0.5, () -> false),
-            new ArmExtend(pneumatics, () -> false),
-            new Manipulator(pneumatics, () -> false)
+            new RunCommand(() -> intake.toggleIntake(), intake).withTimeout(2),
+            // new RunCommand(() -> intake.toggleIntake(), intake),
+            new RunCommand(() -> drive.arcadeDrive(-0.4, 0), drive).withTimeout(2)
         );
     }
     

@@ -65,8 +65,9 @@ public class RobotContainer {
     autoChooser.setDefaultOption("Clack Auto", new ClackAuto(drive));
     autoChooser.addOption("Clack Auto (ORIGINAL)", new ClackAutoAlt(drive));
     autoChooser.addOption("Auto Level", new AutoLevel(drive));
-    // autoChooser.addOption("Hybrid Cube", new HybridCube(drive, arm, pneumatics));
+    autoChooser.addOption("Hybrid Cube", new HybridCube(drive, pneumatics, intake));
     autoChooser.addOption("Test Auto", new TestAuto(drive));
+    autoChooser.addOption("Auto Disabled", new AutoDisabled());
 
     limelightMode.setDefaultOption("Drive", true);
     limelightMode.addOption("Vision", false);
