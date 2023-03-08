@@ -21,6 +21,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -39,8 +40,12 @@ public class DriveSubsystem extends SubsystemBase {
     private double rightOffset;
     private double leftOffset;
 
+    private Field2d field;
+
     public DriveSubsystem() {
         super();
+
+        field = new Field2d();
         
         leftFront = new CANSparkMax(Constants.DriveConstants.kLeftMotor1Port, MotorType.kBrushless);
         leftBack = new CANSparkMax(Constants.DriveConstants.kLeftMotor2Port, MotorType.kBrushless);
@@ -175,6 +180,7 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Right Velocity", rightEncoder.getVelocity());
         SmartDashboard.putNumber("Left Velocity", leftEncoder.getVelocity());
         SmartDashboard.putData(drive);
+        SmartDashboard.putData(field);
     }
 
     public void stop() {
@@ -186,6 +192,7 @@ public class DriveSubsystem extends SubsystemBase {
     public void periodic() {
         odometry.update(getCurrentAngle(), getLeftEncoderPosition(), getRightEncoderPosition());
         debug();
+        field.setRobotPose(odometry.getPoseMeters());
     }
     
 }
