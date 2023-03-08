@@ -55,4 +55,9 @@ public final class Constants {
     public static final double cameraAngleDegrees = 0;
   }
 
+  public static class IntakeConstants {
+    public static final int intakeMotorPortL = 6;
+    public static final int intakeMotorPortR = 7;
+  }
+
 }

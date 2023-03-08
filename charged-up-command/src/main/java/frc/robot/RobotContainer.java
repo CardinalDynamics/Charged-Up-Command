@@ -41,6 +41,7 @@ public class RobotContainer {
   // private final ArmSubsystem arm = new ArmSubsystem();
   private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
   private final VisionSubsystem vision = new VisionSubsystem();
+  private final Intake intake = new Intake();
   
 
 
@@ -62,6 +63,8 @@ public class RobotContainer {
     limelightMode = new SendableChooser<Boolean>();
 
     autoChooser.setDefaultOption("Clack Auto", new ClackAuto(drive));
+    autoChooser.addOption("Clack Auto (ORIGINAL)", new ClackAutoAlt(drive));
+    autoChooser.addOption("Auto Level", new AutoLevel(drive));
     // autoChooser.addOption("Hybrid Cube", new HybridCube(drive, arm, pneumatics));
     autoChooser.addOption("Test Auto", new TestAuto(drive));
 
@@ -88,7 +91,9 @@ public class RobotContainer {
    */
   private void configureBindings() {
     m_operatorController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
-    m_operatorController.x().whileTrue(pneumatics.runOnce(pneumatics::toggleManipulator));
+    // m_operatorController.x().whileTrue(pneumatics.runOnce(pneumatics::toggleManipulator));
+
+    m_operatorController.x().whileTrue(intake.runOnce(intake::toggleIntake));
 
     // m_operatorController.pov(-1).whileTrue(new SetArm(arm, 70));
     // m_operatorController.pov(90).onTrue(new SetArm(arm, 175));

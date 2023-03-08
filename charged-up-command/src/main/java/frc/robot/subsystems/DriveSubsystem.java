@@ -151,6 +151,16 @@ public class DriveSubsystem extends SubsystemBase {
         navx.reset();
     }
 
+    public void autoBalance() {
+        if (Math.abs(navx.getPitch()) < 10 && Math.abs(navx.getRoll()) < 10) {
+            drive.arcadeDrive(0, 0);
+          } else if (navx.getPitch() < -10) {
+            drive.arcadeDrive(.4, 0);
+          } else if (navx.getPitch() > 10) {
+            drive.arcadeDrive(-.4, 0);
+          }
+    }
+
     /**
      * Prints drive values
      */
