@@ -5,7 +5,7 @@ import frc.robot.subsystems.*;
 
 public class HybridCube extends SequentialCommandGroup {
 
-    public HybridCube(DriveSubsystem drive, PneumaticsSubsystem pneumatics, Intake intake) {
+    public HybridCube(DriveSubsystem drive, PneumaticsSubsystem pneumatics, IntakeSubsystem intake) {
         addCommands(
             new RunCommand(() -> intake.toggleIntake(), intake).withTimeout(2),
             // new RunCommand(() -> intake.toggleIntake(), intake),

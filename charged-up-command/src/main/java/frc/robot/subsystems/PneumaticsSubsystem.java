@@ -64,7 +64,7 @@ public class PneumaticsSubsystem extends SubsystemBase {
     public void debug() {
         SmartDashboard.putBoolean("Compressor On", isOn);
         SmartDashboard.putBoolean("Arm Piston", toBoolean(arm1.get()));
-        SmartDashboard.putBoolean("Manipulator Piston", toBoolean(manipulator.get()));
+        // SmartDashboard.putBoolean("Manipulator Piston", toBoolean(manipulator.get()));
     }
 
     @Override

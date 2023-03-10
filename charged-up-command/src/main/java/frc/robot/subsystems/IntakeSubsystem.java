@@ -7,14 +7,14 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
     private final CANSparkMax intakeMotorL, intakeMotorR;
 
-    public Intake() {
+    public IntakeSubsystem() {
         intakeMotorL = new CANSparkMax(Constants.IntakeConstants.intakeMotorPortL, CANSparkMaxLowLevel.MotorType.kBrushless);
         intakeMotorR = new CANSparkMax(Constants.IntakeConstants.intakeMotorPortR, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-        intakeMotorR.follow(intakeMotorL);
+        intakeMotorR.follow(intakeMotorL, true);
 
         intakeMotorL.setInverted(false);
         intakeMotorR.setInverted(true);

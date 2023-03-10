@@ -41,7 +41,10 @@ public class RobotContainer {
   // private final ArmSubsystem arm = new ArmSubsystem();
   private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
   private final VisionSubsystem vision = new VisionSubsystem();
-  private final Intake intake = new Intake();
+  private final IntakeSubsystem intake = new IntakeSubsystem();
+
+  private final Intake intakeCommand = new Intake(intake);
+  private final Outtake outtakeCommand = new Outtake(intake);
   
 
 
@@ -50,7 +53,7 @@ public class RobotContainer {
   
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController driverController =
+  private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   private final CommandXboxController m_operatorController =
@@ -64,6 +67,7 @@ public class RobotContainer {
 
     autoChooser.setDefaultOption("Clack Auto", new ClackAuto(drive));
     autoChooser.addOption("Clack Auto (ORIGINAL)", new ClackAutoAlt(drive));
+    autoChooser.addOption("Cube Auto", new CubeAuto(drive, pneumatics, intake));
     autoChooser.addOption("Auto Level", new AutoLevel(drive));
     autoChooser.addOption("Hybrid Cube", new HybridCube(drive, pneumatics, intake));
     autoChooser.addOption("Test Auto", new TestAuto(drive));
@@ -75,7 +79,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
     SmartDashboard.putData("Limelight Mode", limelightMode);
 
-    drive.setDefaultCommand(new DriveCommand(drive, driverController::getLeftY, driverController::getRightX));
+    drive.setDefaultCommand(new DriveCommand(drive, () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX()));
     // arm.setDefaultCommand(new ArmLift(arm, m_operatorController::getRightTriggerAxis, () -> false));
     // Configure the trigger bindings
     configureBindings();
@@ -91,10 +95,16 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_operatorController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
+    m_driverController.rightBumper().whileTrue(intakeCommand);
+    m_driverController.leftBumper().whileTrue(outtakeCommand);
+
+    m_driverController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
+
+    // m_operatorController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
     // m_operatorController.x().whileTrue(pneumatics.runOnce(pneumatics::toggleManipulator));
 
-    m_operatorController.x().whileTrue(intake.runOnce(intake::toggleIntake));
+    // m_operatorController.rightBumper().whileTrue(intakeCommand);
+    // m_operatorController.leftBumper().whileTrue(outtakeCommand);
 
     // m_operatorController.pov(-1).whileTrue(new SetArm(arm, 70));
     // m_operatorController.pov(90).onTrue(new SetArm(arm, 175));
@@ -126,5 +136,6 @@ public class RobotContainer {
     SmartDashboard.putData(pneumatics);
     SmartDashboard.putData(vision);
     SmartDashboard.putData(intake);
+    pneumatics.debug();
   }
 }

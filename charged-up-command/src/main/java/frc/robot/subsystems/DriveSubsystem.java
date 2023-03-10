@@ -52,6 +52,12 @@ public class DriveSubsystem extends SubsystemBase {
         rightFront = new CANSparkMax(Constants.DriveConstants.kRightMotor1Port, MotorType.kBrushless);
         rightBack = new CANSparkMax(Constants.DriveConstants.kRightMotor2Port, MotorType.kBrushless);
 
+        leftFront.setInverted(false);
+        leftBack.setInverted(false);
+
+        rightFront.setInverted(false);
+        rightBack.setInverted(false);
+
         left = new MotorControllerGroup(leftFront, leftBack);
         right = new MotorControllerGroup(rightFront, rightBack);
 

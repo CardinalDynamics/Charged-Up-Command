@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import java.util.function.BooleanSupplier;
 
-public class ArmExtend extends CommandBase {
+public class ArmRetract extends CommandBase {
     private final PneumaticsSubsystem pneumatics;
 
-    public ArmExtend(PneumaticsSubsystem pneumatics) {
+    public ArmRetract(PneumaticsSubsystem pneumatics) {
         this.pneumatics = pneumatics;
         addRequirements(pneumatics);
     }
@@ -19,7 +19,7 @@ public class ArmExtend extends CommandBase {
 
     @Override
     public void execute() {
-        pneumatics.setArm(Value.kForward);
+        pneumatics.setArm(Value.kReverse);
     }
 
     @Override

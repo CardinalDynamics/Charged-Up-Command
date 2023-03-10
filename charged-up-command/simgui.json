@@ -18,7 +18,32 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/DifferentialDrive[1]": "DifferentialDrive",
-      "/SmartDashboard/Limelight Mode": "String Chooser"
+      "/SmartDashboard/DriveSubsystem": "Subsystem",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/Intake": "Subsystem",
+      "/SmartDashboard/IntakeSubsystem": "Subsystem",
+      "/SmartDashboard/Limelight Mode": "String Chooser",
+      "/SmartDashboard/PneumaticsSubsystem": "Subsystem",
+      "/SmartDashboard/VisionSubsystem": "Subsystem"
+    },
+    "windows": {
+      "/SmartDashboard/Auto Chooser": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/DifferentialDrive[1]": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "SmartDashboard": {
+        "open": true
+      }
     }
   }
 }
