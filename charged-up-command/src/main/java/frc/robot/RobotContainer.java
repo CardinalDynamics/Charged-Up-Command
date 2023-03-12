@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -31,8 +33,10 @@ public class RobotContainer {
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
 
+  SlewRateLimiter limit = new SlewRateLimiter(1.2);
+
   SendableChooser<Command> autoChooser;
-  SendableChooser<Boolean> limelightMode;
+  // SendableChooser<Boolean> limelightMode;
 
   // The robot's subsystems and commands are defined here...
   
@@ -40,11 +44,12 @@ public class RobotContainer {
   private final DriveSubsystem drive = new DriveSubsystem();
   // private final ArmSubsystem arm = new ArmSubsystem();
   private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
-  private final VisionSubsystem vision = new VisionSubsystem();
+  // private final VisionSubsystem vision = new VisionSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
 
   private final Intake intakeCommand = new Intake(intake);
   private final Outtake outtakeCommand = new Outtake(intake);
+  private final IntakeFullSend intakeFullSend = new IntakeFullSend(intake);
   
 
 
@@ -56,30 +61,38 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-  private final CommandXboxController m_operatorController =
-      new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+  // private final CommandXboxController m_operatorController =
+  //     new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
     autoChooser = new SendableChooser<Command>();
-    limelightMode = new SendableChooser<Boolean>();
+    // limelightMode = new SendableChooser<Boolean>();
 
     autoChooser.setDefaultOption("Clack Auto", new ClackAuto(drive));
-    autoChooser.addOption("Clack Auto (ORIGINAL)", new ClackAutoAlt(drive));
+    // autoChooser.addOption("Clack Auto (ORIGINAL)", new ClackAutoAlt(drive));
     autoChooser.addOption("Cube Auto", new CubeAuto(drive, pneumatics, intake));
     autoChooser.addOption("Auto Level", new AutoLevel(drive));
-    autoChooser.addOption("Hybrid Cube", new HybridCube(drive, pneumatics, intake));
-    autoChooser.addOption("Test Auto", new TestAuto(drive));
+    // autoChooser.addOption("Hybrid Cube", new HybridCube(drive, pneumatics, intake));
+    // autoChooser.addOption("Test Auto", new TestAuto(drive));
     autoChooser.addOption("Auto Disabled", new AutoDisabled());
 
-    limelightMode.setDefaultOption("Drive", true);
-    limelightMode.addOption("Vision", false);
+    // limelightMode.setDefaultOption("Drive", true);
+    // limelightMode.addOption("Vision", false);
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    SmartDashboard.putData("Limelight Mode", limelightMode);
+    // SmartDashboard.putData("Limelight Mode", limelightMode);
 
-    drive.setDefaultCommand(new DriveCommand(drive, () -> -m_driverController.getLeftY(), () -> -m_driverController.getRightX()));
+    drive.setDefaultCommand(new DriveCommand(
+      drive, 
+      () -> {
+        return Math.abs(m_driverController.getLeftY()) > Constants.OperatorConstants.yDeadband ?
+        -limit.calculate(m_driverController.getLeftY()) : 
+        0;
+      }, 
+      () -> -m_driverController.getRightX())
+    );
     // arm.setDefaultCommand(new ArmLift(arm, m_operatorController::getRightTriggerAxis, () -> false));
     // Configure the trigger bindings
     configureBindings();
@@ -97,6 +110,8 @@ public class RobotContainer {
   private void configureBindings() {
     m_driverController.rightBumper().whileTrue(intakeCommand);
     m_driverController.leftBumper().whileTrue(outtakeCommand);
+
+    m_driverController.x().whileTrue(intakeFullSend);
 
     m_driverController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
 
@@ -122,19 +137,19 @@ public class RobotContainer {
     return autoChooser.getSelected();
   }
 
-  public void limelightMode() {
-    if (limelightMode.getSelected()) {
-      vision.setModeDriver();
-    } else {
-      vision.setModeVision();
-    }
-  }
+  // public void limelightMode() {
+  //   if (limelightMode.getSelected()) {
+  //     vision.setModeDriver();
+  //   } else {
+  //     vision.setModeVision();
+  //   }
+  // }
 
   public void debug() {
     SmartDashboard.putData(drive);
     // SmartDashboard.putData(arm);
     SmartDashboard.putData(pneumatics);
-    SmartDashboard.putData(vision);
+    // SmartDashboard.putData(vision);
     SmartDashboard.putData(intake);
     pneumatics.debug();
   }

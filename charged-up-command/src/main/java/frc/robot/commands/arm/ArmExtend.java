@@ -3,7 +3,7 @@ package frc.robot.commands.arm;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PneumaticsSubsystem;
-import java.util.function.BooleanSupplier;
+// import java.util.function.BooleanSupplier;
 
 public class ArmExtend extends CommandBase {
     private final PneumaticsSubsystem pneumatics;

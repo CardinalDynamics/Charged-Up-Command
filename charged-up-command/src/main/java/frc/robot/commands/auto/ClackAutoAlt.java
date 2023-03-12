@@ -8,7 +8,8 @@ public class ClackAutoAlt extends SequentialCommandGroup {
         addCommands(
             new RunCommand(() -> driveSubsystem.arcadeDrive(0.3, 0), driveSubsystem).withTimeout(1),
             new RunCommand(() -> driveSubsystem.arcadeDrive(-0.6, 0), driveSubsystem).withTimeout(1),
-            new RunCommand(() -> driveSubsystem.arcadeDrive(0.5, 0), driveSubsystem).withTimeout(2.5)
+            new RunCommand(() -> driveSubsystem.arcadeDrive(0.5, 0), driveSubsystem).withTimeout(2.5),
+            new RunCommand(() -> driveSubsystem.autoBalance(), driveSubsystem)
         );
     }
 }

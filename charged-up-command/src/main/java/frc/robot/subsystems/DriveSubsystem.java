@@ -167,9 +167,9 @@ public class DriveSubsystem extends SubsystemBase {
     public void autoBalance() {
         if (Math.abs(navx.getPitch()) < 10 && Math.abs(navx.getRoll()) < 10) {
             drive.arcadeDrive(0, 0);
-          } else if (navx.getPitch() < -10) {
+          } else if (navx.getPitch() < -15) {
             drive.arcadeDrive(.4, 0);
-          } else if (navx.getPitch() > 10) {
+          } else if (navx.getPitch() > 15) {
             drive.arcadeDrive(-.4, 0);
           }
     }
@@ -197,8 +197,8 @@ public class DriveSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         odometry.update(getCurrentAngle(), getLeftEncoderPosition(), getRightEncoderPosition());
-        debug();
-        field.setRobotPose(odometry.getPoseMeters());
+        // debug();
+        // field.setRobotPose(odometry.getPoseMeters());
     }
     
 }

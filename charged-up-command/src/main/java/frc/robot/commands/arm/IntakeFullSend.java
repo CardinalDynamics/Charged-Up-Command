@@ -1,13 +1,13 @@
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj2.command.*;
 
-public class Outtake extends CommandBase {
+import frc.robot.subsystems.IntakeSubsystem;
 
+public class IntakeFullSend extends CommandBase {
     private final IntakeSubsystem intake;
     
-    public Outtake(IntakeSubsystem intakeSubsystem) {
+    public IntakeFullSend(IntakeSubsystem intakeSubsystem) {
         addRequirements(intakeSubsystem);
         intake = intakeSubsystem;
     }
@@ -18,7 +18,7 @@ public class Outtake extends CommandBase {
 
     @Override
     public void execute() {
-        intake.setIntakeSpeed(-0.5);
+        intake.setIntakeSpeed(-1);
     }
 
     @Override
@@ -30,5 +30,4 @@ public class Outtake extends CommandBase {
     public boolean isFinished() {
         return false;
     }
-
 }

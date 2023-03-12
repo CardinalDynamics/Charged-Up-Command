@@ -18,8 +18,8 @@ public class PneumaticsSubsystem extends SubsystemBase {
 
     public PneumaticsSubsystem() {
         compressor = new Compressor(PneumaticsModuleType.REVPH);
-        arm1 = new DoubleSolenoid(PneumaticsModuleType.REVPH, 13, 12);
-        manipulator = new DoubleSolenoid(PneumaticsModuleType.REVPH, 14, 15);
+        arm1 = new DoubleSolenoid(PneumaticsModuleType.REVPH, 14, 15);
+        // manipulator = new DoubleSolenoid(PneumaticsModuleType.REVPH, 14, 15);
     }
 
     public boolean setCompressor(boolean on) {

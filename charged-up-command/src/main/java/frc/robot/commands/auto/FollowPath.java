@@ -16,7 +16,7 @@ import frc.robot.subsystems.DriveSubsystem;
 public class FollowPath extends CommandBase {
     private final RamseteCommand ramseteCommand;
     private final DriveSubsystem drive;
-    private final Trajectory path;
+    // private final Trajectory path;
 
     public FollowPath(DriveSubsystem m_drive, String path, boolean reversed) {
         drive = m_drive;
@@ -28,7 +28,7 @@ public class FollowPath extends CommandBase {
             trajectory = new Trajectory();
             DriverStation.reportError("Failed to load trajectory", false);
         }
-        this.path = trajectory;
+        // this.path = trajectory;
         ramseteCommand = new RamseteCommand(
             trajectory,
             drive::getRobotPos,
