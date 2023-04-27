@@ -13,6 +13,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  // controller ports and deadbands
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
@@ -21,6 +22,7 @@ public final class Constants {
     public static final double xDeadband = 0.1;
   }
 
+  // various numbers needed to drive the robot or something dude i dont know
   public static class DriveConstants {
     public static final int kLeftMotor1Port = 1;
     public static final int kLeftMotor2Port = 2;
@@ -35,6 +37,7 @@ public final class Constants {
     public static final double wheelRatio = 0.478779;
   }
 
+  // numbers needed to move the robor
   public static class MotionConstants {
     public static final double ksVolts = 0.11233;
     public static final double kvVoltSecondsPerMeter = 1.3694;
@@ -49,12 +52,14 @@ public final class Constants {
     public static final double ramseteZeta = 0.7;
   }
 
+  // lemonlight stuff
   public static class Vision {
     public static final double goalHeightInches = 30;
     public static final double cameraHeightInches = 26.5;
     public static final double cameraAngleDegrees = 0;
   }
 
+  // motors for intakeing
   public static class IntakeConstants {
     public static final int intakeMotorPortL = 6;
     public static final int intakeMotorPortR = 7;

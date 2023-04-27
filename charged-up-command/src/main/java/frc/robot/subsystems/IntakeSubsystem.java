@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+// this subsystem is for the two intake motors on the end of the arm.
 public class IntakeSubsystem extends SubsystemBase {
     private final CANSparkMax intakeMotorL, intakeMotorR;
 

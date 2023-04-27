@@ -165,65 +165,6 @@
               ]
             }
           },
-          "3,0": {
-            "size": [
-              2,
-              3
-            ],
-            "content": {
-              "_type": "Grid Layout",
-              "_title": "Drive Debug",
-              "_glyph": 149,
-              "_showGlyph": false,
-              "Layout/Number of columns": 3,
-              "Layout/Number of rows": 3,
-              "Layout/Label position": "BOTTOM",
-              "_children": {
-                "1,1": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Right Encoder",
-                  "_title": "Right Encoder",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                "0,1": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Left Encoder",
-                  "_title": "Left Encoder",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                "0,2": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Left Velocity",
-                  "_title": "Left Velocity",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                "1,2": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Right Velocity",
-                  "_title": "Right Velocity",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                "0,0": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Odometry X",
-                  "_title": "Odometry X",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                },
-                "1,0": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Odometry Y",
-                  "_title": "Odometry Y",
-                  "_glyph": 148,
-                  "_showGlyph": false
-                }
-              }
-            }
-          },
           "5,3": {
             "size": [
               2,
@@ -319,6 +260,19 @@
               "Game/Game": "A2023_Charged_Up",
               "Visuals/Robot Icon Size": 50.0,
               "Visuals/Show Outside Circles": false
+            }
+          },
+          "10,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Basic Subsystem",
+              "_source0": "network_table:///SmartDashboard/IntakeSubsystem",
+              "_title": "IntakeSubsystem",
+              "_glyph": 148,
+              "_showGlyph": false
             }
           }
         }
@@ -675,9 +629,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.199999809265137,
-    "y": -7.199999809265137,
-    "width": 1550.4000244140625,
-    "height": 830.4000244140625
+    "x": -6.400000095367432,
+    "y": 0.0,
+    "width": 876.7999877929688,
+    "height": 822.4000244140625
   }
 }

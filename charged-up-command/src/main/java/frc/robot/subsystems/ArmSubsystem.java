@@ -11,6 +11,7 @@
 // import edu.wpi.first.math.trajectory.TrapezoidProfile;
 // import edu.wpi.first.math.MathUtil;
 
+// this subsystem is for the arm, it's disabled for now due to us not having an arm motor.
 // public class ArmSubsystem extends SubsystemBase {
 //     private CANSparkMax armMotor;
 //     private RelativeEncoder armEncoder;

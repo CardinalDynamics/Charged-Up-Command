@@ -13,6 +13,7 @@ import frc.robot.subsystems.DriveSubsystem;
 
 import com.pathplanner.lib.PathPlanner;
 
+// this command was for pathplanner autonomous, but we scrapped it just before wilsonville.
 public class MotionProfileCommand extends CommandBase {
     private static final double ramseteB = Constants.MotionConstants.ramseteB;
     private static final double ramseteZeta = Constants.MotionConstants.ramseteZeta;

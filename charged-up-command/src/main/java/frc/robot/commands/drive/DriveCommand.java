@@ -6,6 +6,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import java.util.function.DoubleSupplier;
 
+// the command that drives the robot. incredibly simple!
 public class DriveCommand extends CommandBase {
     private final DriveSubsystem drive;
     private final DoubleSupplier driveY;

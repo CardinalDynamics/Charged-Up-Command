@@ -23,6 +23,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 
+// this subsystem is for driving the robot. it may look incredibly complicated (and it is), but it works.
 public class DriveSubsystem extends SubsystemBase {
 
     private final CANSparkMax leftFront, leftBack, rightFront, rightBack;

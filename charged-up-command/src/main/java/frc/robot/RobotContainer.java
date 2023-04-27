@@ -28,11 +28,14 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  
+  // Mostly Limelight code, can be ignored
   public static final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
 
+  // SlewRateLimiter, basically an acceleration curve for the drivetrain
   SlewRateLimiter limit = new SlewRateLimiter(1.2);
 
   SendableChooser<Command> autoChooser;
@@ -47,16 +50,12 @@ public class RobotContainer {
   // private final VisionSubsystem vision = new VisionSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
 
+  // Commands
   private final Intake intakeCommand = new Intake(intake);
   private final Outtake outtakeCommand = new Outtake(intake);
   private final IntakeFullSend intakeFullSend = new IntakeFullSend(intake);
-  
 
-
-
-  // Commands
-  
-
+  // Controller initialization
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -67,9 +66,11 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
+    // dropdown menu for selecting the autonomous
     autoChooser = new SendableChooser<Command>();
     // limelightMode = new SendableChooser<Boolean>();
 
+    // adding options for the dropdown menu
     autoChooser.setDefaultOption("Clack Auto", new ClackAuto(drive));
     // autoChooser.addOption("Clack Auto (ORIGINAL)", new ClackAutoAlt(drive));
     autoChooser.addOption("Cube Auto", new CubeAuto(drive, pneumatics, intake));
@@ -81,9 +82,11 @@ public class RobotContainer {
     // limelightMode.setDefaultOption("Drive", true);
     // limelightMode.addOption("Vision", false);
 
+    // putting the dropdown menu on the dashboard
     SmartDashboard.putData("Auto Chooser", autoChooser);
     // SmartDashboard.putData("Limelight Mode", limelightMode);
 
+    // setting the default command for the drive subsystem
     drive.setDefaultCommand(new DriveCommand(
       drive, 
       () -> {
@@ -108,6 +111,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    // setting the various buttons on the drive controller
     m_driverController.rightBumper().whileTrue(intakeCommand);
     m_driverController.leftBumper().whileTrue(outtakeCommand);
 
@@ -133,7 +137,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
+    // telling the robot what to do in autonomous
     return autoChooser.getSelected();
   }
 
@@ -146,6 +150,7 @@ public class RobotContainer {
   // }
 
   public void debug() {
+    // putting some values on the dashboard
     SmartDashboard.putData(drive);
     // SmartDashboard.putData(arm);
     SmartDashboard.putData(pneumatics);
