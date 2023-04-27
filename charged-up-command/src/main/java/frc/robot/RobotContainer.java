@@ -49,6 +49,7 @@ public class RobotContainer {
   private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
   // private final VisionSubsystem vision = new VisionSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final PDHSubsystem pdh = new PDHSubsystem();
 
   // Commands
   private final Intake intakeCommand = new Intake(intake);
@@ -156,6 +157,7 @@ public class RobotContainer {
     SmartDashboard.putData(pneumatics);
     // SmartDashboard.putData(vision);
     SmartDashboard.putData(intake);
+    SmartDashboard.putData(pdh);
     pneumatics.debug();
   }
 }
