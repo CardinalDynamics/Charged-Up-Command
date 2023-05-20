@@ -37,6 +37,7 @@ public class RobotContainer {
 
   // SlewRateLimiter, basically an acceleration curve for the drivetrain
   SlewRateLimiter limit = new SlewRateLimiter(1.2);
+  SlewRateLimiter limitX = new SlewRateLimiter(2);
 
   SendableChooser<Command> autoChooser;
   // SendableChooser<Boolean> limelightMode;
@@ -45,8 +46,8 @@ public class RobotContainer {
   
   // Subsystems
   private final DriveSubsystem drive = new DriveSubsystem();
-  // private final ArmSubsystem arm = new ArmSubsystem();
-  private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
+  private final ArmSubsystem arm = new ArmSubsystem();
+  // private final PneumaticsSubsystem pneumatics = new PneumaticsSubsystem();
   // private final VisionSubsystem vision = new VisionSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final PDHSubsystem pdh = new PDHSubsystem();
@@ -74,7 +75,7 @@ public class RobotContainer {
     // adding options for the dropdown menu
     autoChooser.setDefaultOption("Clack Auto", new ClackAuto(drive));
     // autoChooser.addOption("Clack Auto (ORIGINAL)", new ClackAutoAlt(drive));
-    autoChooser.addOption("Cube Auto", new CubeAuto(drive, pneumatics, intake));
+    // autoChooser.addOption("Cube Auto", new CubeAuto(drive, pneumatics, intake));
     autoChooser.addOption("Auto Level", new AutoLevel(drive));
     // autoChooser.addOption("Hybrid Cube", new HybridCube(drive, pneumatics, intake));
     // autoChooser.addOption("Test Auto", new TestAuto(drive));
@@ -95,8 +96,16 @@ public class RobotContainer {
         -limit.calculate(m_driverController.getLeftY()) : 
         0;
       }, 
-      () -> -m_driverController.getRightX())
+      () -> {
+        return Math.abs(m_driverController.getRightX()) > Constants.OperatorConstants.xDeadband ?
+        -limitX.calculate(m_driverController.getRightX()) :
+        0;
+      }
+      )
     );
+    arm.setDefaultCommand(new ArmLift(arm, () -> {
+      return m_driverController.getLeftTriggerAxis();
+    }, () -> false));
     // arm.setDefaultCommand(new ArmLift(arm, m_operatorController::getRightTriggerAxis, () -> false));
     // Configure the trigger bindings
     configureBindings();
@@ -118,7 +127,7 @@ public class RobotContainer {
 
     m_driverController.x().whileTrue(intakeFullSend);
 
-    m_driverController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
+    // m_driverController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
 
     // m_operatorController.a().whileTrue(pneumatics.runOnce(pneumatics::toggleArm));
     // m_operatorController.x().whileTrue(pneumatics.runOnce(pneumatics::toggleManipulator));
@@ -154,10 +163,10 @@ public class RobotContainer {
     // putting some values on the dashboard
     SmartDashboard.putData(drive);
     // SmartDashboard.putData(arm);
-    SmartDashboard.putData(pneumatics);
+    // SmartDashboard.putData(pneumatics);
     // SmartDashboard.putData(vision);
     SmartDashboard.putData(intake);
     SmartDashboard.putData(pdh);
-    pneumatics.debug();
+    // pneumatics.debug();
   }
 }
