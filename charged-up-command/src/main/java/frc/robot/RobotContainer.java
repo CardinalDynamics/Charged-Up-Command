@@ -104,6 +104,8 @@ public class RobotContainer {
       )
     );
     arm.setDefaultCommand(new ArmLift(arm, () -> {
+      return m_driverController.getRightTriggerAxis();
+    }, () -> {
       return m_driverController.getLeftTriggerAxis();
     }, () -> false));
     // arm.setDefaultCommand(new ArmLift(arm, m_operatorController::getRightTriggerAxis, () -> false));

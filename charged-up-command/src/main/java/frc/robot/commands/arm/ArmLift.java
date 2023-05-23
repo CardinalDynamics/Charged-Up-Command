@@ -8,12 +8,15 @@ import java.util.function.DoubleSupplier;
 
 public class ArmLift extends CommandBase {
     private final ArmSubsystem arm;
-    private final DoubleSupplier speed;
+    private final DoubleSupplier trigger1;
+    private final DoubleSupplier trigger2;
     private final BooleanSupplier stop;
+    private double armSpeed;
     
-    public ArmLift(ArmSubsystem arm, DoubleSupplier speed, BooleanSupplier stop) {
+    public ArmLift(ArmSubsystem arm, DoubleSupplier trigger1, DoubleSupplier trigger2, BooleanSupplier stop) {
         this.arm = arm;
-        this.speed = speed;
+        this.trigger1 = trigger1;
+        this.trigger2 = trigger2;
         this.stop = stop;
         addRequirements(arm);
     }
@@ -24,7 +27,11 @@ public class ArmLift extends CommandBase {
 
     @Override
     public void execute() {
-        double armSpeed = speed.getAsDouble();
+        if (trigger1.getAsDouble() > trigger2.getAsDouble()) {
+            armSpeed = trigger1.getAsDouble();
+        } else {
+            armSpeed = -trigger2.getAsDouble();
+        }
         
         if (stop.getAsBoolean()) {
             arm.setArmSpeed(0);
