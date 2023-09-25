@@ -34,9 +34,9 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     // cameras !!!
-    cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
+    // cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
     CameraServer.startAutomaticCapture(0);
-    CameraServer.startAutomaticCapture(1);
+    // CameraServer.startAutomaticCapture(1);
   }
 
   /**

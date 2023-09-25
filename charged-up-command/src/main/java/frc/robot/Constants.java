@@ -29,12 +29,17 @@ public final class Constants {
     public static final int kRightMotor1Port = 3;
     public static final int kRightMotor2Port = 4;
 
+    public static final int kArmMotorPort = 5;
+    public static final int kIntakeMotorPort = 6;
+
     public static final double gyroOffset = 0;
 
     public static final double trackWidth = 0.61;
 
     public static final double gearRatio = 1 / 10.71;
     public static final double wheelRatio = 0.478779;
+
+    public static final int kArmSetpoint = 90;
   }
 
   // numbers needed to move the robor
@@ -60,9 +65,9 @@ public final class Constants {
   }
 
   // motors for intakeing
-  public static class IntakeConstants {
-    public static final int intakeMotorPortL = 6;
-    public static final int intakeMotorPortR = 7;
-  }
+  // public static class IntakeConstants {
+  //   public static final int intakeMotorPortL = 6;
+  //   public static final int intakeMotorPortR = 7;
+  // }
 
 }
