@@ -16,6 +16,7 @@ import frc.robot.Constants;
 public class ArmSubsystem extends SubsystemBase {
     private CANSparkMax armMotor;
     private RelativeEncoder armEncoder;
+    private double armSpeed;
     // private ArmFeedforward armFeedforward;
     // private ProfiledPIDController motionController;
     // private double input;
@@ -39,7 +40,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void setArmSpeed(double speed) {
-        double armSpeed = speed;
+        this.armSpeed = speed;
         armMotor.set(armSpeed);
     }
 
@@ -49,6 +50,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void debug() {
         SmartDashboard.putNumber("Arm Encoder", armEncoder.getPosition());
+        SmartDashboard.putNumber("Arm Speed", armSpeed);
     }
 
     public void setArmPosition(double position) {

@@ -18,6 +18,7 @@
       "/SmartDashboard/Intake": "Subsystem",
       "/SmartDashboard/IntakeSubsystem": "Subsystem",
       "/SmartDashboard/Limelight Mode": "String Chooser",
+      "/SmartDashboard/PDHSubsystem": "Subsystem",
       "/SmartDashboard/PneumaticsSubsystem": "Subsystem",
       "/SmartDashboard/VisionSubsystem": "Subsystem"
     },
