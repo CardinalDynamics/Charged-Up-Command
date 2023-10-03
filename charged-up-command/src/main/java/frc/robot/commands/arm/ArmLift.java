@@ -6,15 +6,21 @@ import frc.robot.subsystems.ArmSubsystem;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
+
 public class ArmLift extends CommandBase {
     private final ArmSubsystem arm;
     private final DoubleSupplier speed;
     private final BooleanSupplier stop;
+    private SlewRateLimiter inputPos;
+    private SlewRateLimiter inputNeg;
     
     public ArmLift(ArmSubsystem arm, DoubleSupplier speed, BooleanSupplier stop) {
         this.arm = arm;
         this.speed = speed;
         this.stop = stop;
+        this.inputPos = new SlewRateLimiter(1.2);
+        this.inputNeg = new SlewRateLimiter(1.2);
         addRequirements(arm);
     }
 
@@ -22,11 +28,11 @@ public class ArmLift extends CommandBase {
         this.arm = arm;
         this.speed = () -> {
             if (speedPos.getAsDouble() > 0.1) {
-                return speedPos.getAsDouble();
+                return inputPos.calculate(speedPos.getAsDouble());
             } else if (-speedNeg.getAsDouble() < -0.1) {
-                return -speedNeg.getAsDouble();
+                return -inputNeg.calculate(speedNeg.getAsDouble());
             } else if (speedPos.getAsDouble() > 0.1 && speedNeg.getAsDouble() > 0.1) {
-                return speedPos.getAsDouble();
+                return inputPos.calculate(speedPos.getAsDouble());
             } else {
                 return 0;
             }
