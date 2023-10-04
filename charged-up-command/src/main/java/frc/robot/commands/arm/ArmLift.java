@@ -28,16 +28,16 @@ public class ArmLift extends CommandBase {
     @Override
     public void execute() {
         if (trigger1.getAsDouble() > trigger2.getAsDouble()) {
-            armSpeed = trigger1.getAsDouble();
+            armSpeed = trigger1.getAsDouble() * 0.5;
         } else {
-            armSpeed = -trigger2.getAsDouble();
+            armSpeed = -trigger2.getAsDouble() * 0.5;
         }
         
         if (stop.getAsBoolean()) {
             arm.setArmSpeed(0);
         } else {
-            arm.setArmSpeed(armSpeed);
         }
+            arm.setArmSpeed(armSpeed);
     }
 
     @Override
