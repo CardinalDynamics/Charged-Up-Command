@@ -44,7 +44,6 @@ public class ArmLift extends CommandBase {
     public boolean isFinished() {
         return false;
     }
-
     @Override
     public void end(boolean interrupted) {
         arm.setArmSpeed(0);
